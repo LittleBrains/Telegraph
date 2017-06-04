@@ -12,7 +12,6 @@ import ru.littlebrains.telegraph.model.PageModel;
 public class test {
 
     public void tt(){
-        List<PageModel> listPages = new ArrayList<>();
-        listPages.add(new PageModel("","","","","","", 0,true, ""));
+
     }
 }

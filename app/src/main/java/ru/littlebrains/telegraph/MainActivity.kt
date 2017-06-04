@@ -24,18 +24,11 @@ class MainActivity : BaseActivity() {
         setDisplayHomeAsUp()
 
         val token = Utils.getSharedPreferences(baseContext).getString("token", null);
+
         if(token != null){
             Log.d("token", token);
 
-            newFragment(MainFragment(), R.layout.fragment_main, false);
-
-            /*CreatePageApi(this).requestGet(token, "my 5 page", object : ICallBackTApi<PageModel>{
-                override fun onComplete(result: PageModel) {
-                }
-                override fun onException(e: RequestException) {
-                    Log.d("CreatePageApi", e)
-                }
-            })*/
+            newFragment(MainFragment(), R.layout.fragment_main, false)
         }else {
             CreateAccountApi(this).requestGet("little", "lb", "vk.com/kizirove", object : ICallBackTApi<AccountModel> {
                 override fun onComplete(result: AccountModel) {

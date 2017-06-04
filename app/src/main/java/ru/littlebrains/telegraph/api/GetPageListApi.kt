@@ -44,7 +44,7 @@ class GetPageListApi(activity: Activity) : BaseApi<List<PageModel>>(activity) {
                 val views = jsonArray.getJSONObject(i).getInt("views")
                 val can_edit = jsonArray.getJSONObject(i).getBoolean("can_edit")
 
-                listPages.add(PageModel(path, url, title, description, author_name, image_url, views, can_edit))
+                listPages.add(PageModel(ok, "", path, url, title, description, author_name, image_url, views, can_edit))
             }
             return listPages
         }catch (e: JSONException){

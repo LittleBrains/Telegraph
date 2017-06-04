@@ -1,6 +1,8 @@
 package ru.littlebrains.telegraph.api
 
 import android.app.Activity
+import org.json.JSONException
+import org.json.JSONObject
 import ru.littlebrains.telegraph.model.PageModel
 import trikita.log.Log
 import java.net.URLEncoder
@@ -11,8 +13,8 @@ import java.net.URLEncoder
 
 class CreatePageApi(activity: Activity) : BaseApi<PageModel>(activity){
 
-    fun requestGet(access_token: String, title: String, iCallBackTApi: ICallBackTApi<PageModel>){
-        val content = "[{\"tag\":\"p\",\"children\":[\"1, world!\"]}]";
+    fun requestGet(access_token: String, title: String, content: String, iCallBackTApi: ICallBackTApi<PageModel>){
+        val content = "[{\"tag\":\"p\",\"children\":[\"$content\"]}]";
         val url:String = SERVER + "/createPage" +
                 "?access_token=$access_token" +
                 "&title=${URLEncoder.encode(title)}" +
@@ -23,8 +25,16 @@ class CreatePageApi(activity: Activity) : BaseApi<PageModel>(activity){
     }
 
     override fun parseThreade(resultJson: String?): PageModel {
-        Log.d("createpage", resultJson)
-        return PageModel()
+        try{
+            val jsonObject = JSONObject(resultJson)
+            val ok = jsonObject.getBoolean("ok")
+            if(!ok) return PageModel(ok, jsonObject.getString("error"));
+
+            return PageModel(ok);
+        }catch (e: JSONException){
+            Log.e(e);
+        }
+        return PageModel(false)
     }
 
 }
